@@ -1,0 +1,57 @@
+ desc room;
++------------+-------------------------+------+-----+---------+-------+
+| Field      | Type                    | Null | Key | Default | Extra |
++------------+-------------------------+------+-----+---------+-------+
+| room_num   | int                     | NO   | PRI | NULL    |       |
+| room_type  | enum('single','double') | YES  |     | NULL    |       |
+| room_price | int                     | NO   |     | NULL    |       |
+| room_state | enum('empty','busy')    | YES  |     | empty   |       |
++------------+-------------------------+------+-----+---------+-------+
+
+ desc lodger;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| lodger_name | varchar(32) | NO   |     | NULL    |       |
+| id_l        | varchar(18) | NO   | PRI | NULL    |       |
+| room_name   | int         | NO   | UNI | NULL    |       |
+| payment     | int         | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+
+
+
+ desc checkout;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| num          | int         | NO   | PRI | NULL    | auto_increment |
+| lodger_name  | varchar(32) | NO   |     | NULL    |                |
+| id_c         | varchar(18) | NO   |     | NULL    |                |
+| room_name    | int         | YES  |     | NULL    |                |
+| lives_days   | int         | YES  |     | NULL    |                |
+| room_account | int         | YES  |     | NULL    |                |
+| back_change  | int         | YES  |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+
+
+
+desc date;
++-----------------+-------------+------+-----+-------------------+-------------------+
+| Field           | Type        | Null | Key | Default           | Extra             |
++-----------------+-------------+------+-----+-------------------+-------------------+
+| id              | varchar(18) | NO   | PRI | NULL              |                   |
+| checkin_date    | datetime    | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
+| p_checkout_date | datetime    | YES  |     | NULL              |                   |
++-----------------+-------------+------+-----+-------------------+-------------------+
+
+
+
+desc t_user;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| id       | int         | NO   | PRI | NULL    | auto_increment |
+| userName | varchar(32) | YES  |     | NULL    |                |
+| password | varchar(18) | YES  |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+

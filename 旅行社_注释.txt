@@ -1,0 +1,62 @@
+表：
+
+1 room:
+	room_num 	  房间号 		主键
+	room_type 	  房间型号
+	room_price	  房间价格
+	room_state 	  房间状态
+2 lodger:
+	lodger_name 	 旅客姓名
+	id_l  		 旅客id		主键
+	room_name 	 房间号 		外键约束（room）	
+	payment 		 付款
+3 date:
+	id		 旅客id		主键
+	checkin_date	 入住时间
+	p_checkout_date 	 预期退房时间
+4 checkout:
+	num 		 自增数		主键
+	lodger_name 	 旅客姓名
+	id_c 		 旅客id 		
+	room_name 	 房间号 		
+	lives_days 	 居住天数
+	room_account	 账单
+	back_change 	 找零
+
+
+视图：
+1	v1_room
+		查询正在使用的房间和旅客信息
+2	v2_lodger
+		查询正在居住旅客的全部信息
+
+触发器：
+
+1 	t1_busy
+		当lodger表中增加信息时，将room表中对应房间号改为‘busy’；
+2 	t2_empty_del
+		当checkout表中增加信息时，将room表中对应房间号改为‘empty’，并将lodger表中对应信息删除；
+3 	t3_price_error
+		当lodger表中输入的payment小于房间价格时，中断输入；
+
+
+存储过程：
+
+1 	call p1_emptyroom();			差剩余空房间
+2 	call p2_busyroom();				查已被出租的房间
+3 	call p3_date(date)				查询某天的在住旅客记录
+4 	call p4_h_date(date)			查询某天的租房历史记录
+5 	call p5_lodger(id)				查询某在住旅客的记录
+6 	call p6_h_lodger(id)				查询某旅客的历史记录		
+7 	call p7_checkout(room_name,lives_days)	结账，向checkout表中增加数据
+	call p7_ad_checkout(room_name,ad_date,lives_days)
+						结账，向checkout表中增加数据，并向date表中增加提前结账时间
+8 	call p8_checkin(lodger_name,id,		向lodger表中增加信息
+	room_name,check_indate,p_checkout_date,payment)								
+9	call p9_room(room)				查询某个房间的全部历史记录
+10	call p10_profit()				查总盈利
+
+
+用户
+1	administrator@localhost			全部权限 增删改查
+2	service@localhost				增加、查询
